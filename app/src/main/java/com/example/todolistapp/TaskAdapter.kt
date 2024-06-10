@@ -14,7 +14,7 @@ import kotlin.concurrent.thread
 
 class TaskAdapter(private var tasks: MutableList<Task>, private val database: AppDatabase) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    // Inner class for the ViewHolder
+
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.task_title)
         val description: TextView = view.findViewById(R.id.task_description)
@@ -32,15 +32,12 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val database: Ap
         holder.title.text = task.title
         holder.description.text = task.description
 
-        // Set up the delete button click listener
         holder.deleteButton.setOnClickListener {
             removeTask(position)
         }
     }
-
     override fun getItemCount() = tasks.size
 
-    // Method to update the list of tasks
     fun updateTasks(newTasks: List<Task>) {
         tasks.clear()
         tasks.addAll(newTasks)
@@ -55,11 +52,9 @@ class TaskAdapter(private var tasks: MutableList<Task>, private val database: Ap
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, tasks.size)
 
-        // Delete the task from the database
         thread {
             database.taskDao().deleteTask(task)
             Handler(Looper.getMainLooper()).post {
-                // Update the RecyclerView to reflect the changes
                 notifyDataSetChanged()
             }
         }

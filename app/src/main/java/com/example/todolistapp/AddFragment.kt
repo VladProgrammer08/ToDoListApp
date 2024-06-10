@@ -23,11 +23,11 @@ class AddFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add, container, false)
 
-        // Initialize the database and TaskDao
+
         val database = AppDatabase.getDatabase(requireActivity().application)
         val taskDao = database.taskDao()
 
-        // Initialize your repository with the TaskDao
+
         repository = TaskRepository(taskDao)
 
         val titleEditText = view.findViewById<EditText>(R.id.task_title)
@@ -38,15 +38,15 @@ class AddFragment : Fragment() {
             val title = titleEditText.text.toString()
             val description = descriptionEditText.text.toString()
 
-            // Create a new Task object
+
             val task = Task(title = title, description = description)
 
-            // Insert the task into the database
+
             CoroutineScope(Dispatchers.IO).launch {
                 repository.insertTask(task)
             }
 
-            // Navigate back to the list of tasks
+
             view.findNavController().navigate(R.id.action_addFragment_to_showTasksFragment)
         }
 

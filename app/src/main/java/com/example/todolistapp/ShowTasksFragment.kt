@@ -28,25 +28,25 @@ class ShowTasksFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Initialize the database instance here or in a ViewModel
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_show_tasks, container, false)
 
-        // Initialize RecyclerView
+
         tasksRecyclerView = view.findViewById(R.id.tasks_recycler_view)
         tasksRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        // Initialize the adapter with an empty list or data from your database
+
         taskAdapter = TaskAdapter(mutableListOf(), database)
         tasksRecyclerView.adapter = taskAdapter
 
-        // Set up the 'Add' button to navigate to the AddFragment
+
         val addButton = view.findViewById<Button>(R.id.add)
         addButton.setOnClickListener {
             findNavController().navigate(R.id.action_showTasksFragment_to_addFragment)
@@ -57,7 +57,6 @@ class ShowTasksFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh the list of tasks when returning to the fragment
         loadTasks()
     }
 
